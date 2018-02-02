@@ -14,6 +14,11 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+                
+                ExpressionTree tree = new ExpressionTree();
+                
+                tree.read("1+2*3-4/6");
+                tree.inOrder();
 	}
 
 	@Override
