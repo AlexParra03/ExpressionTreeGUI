@@ -81,6 +81,37 @@ public class ExpressionTree {
           
     }
     
+    public double calculate(){
+        return recursiveCalculate(this.root);
+    }
+    
+    private double recursiveCalculate(Node node){
+        if(!isOperation(node)){
+            if(node.data.charAt(0) == '('){
+                return Double.parseDouble( node.data.substring(1, node.data.length()-1) );
+            }else{
+                return Double.parseDouble(node.data);
+            }
+        }else{
+            char c = node.data.charAt(0);
+            if(c == '^'){
+                return Math.pow(recursiveCalculate(node.left), recursiveCalculate(node.right));
+            }else if(c == '*'){
+                return recursiveCalculate(node.left) * recursiveCalculate(node.right);
+            }else if(c == '/'){
+                return recursiveCalculate(node.left) / recursiveCalculate(node.right);
+            }else if(c == '+'){
+                return recursiveCalculate(node.left) + recursiveCalculate(node.right);
+            }else if(c == '-'){
+                return recursiveCalculate(node.left) - recursiveCalculate(node.right);
+            }else{
+                System.out.println("Operation not recognized");
+                return 0;
+            }
+        }
+    }
+    
+    
     public void inOrder(){
         System.out.print("In-Order traversal: ");
         inOrder(this.root);
@@ -92,12 +123,25 @@ public class ExpressionTree {
             return;
         }
         
+        if(isOperation(node)){
+            System.out.print('(');
+        }
         inOrder(node.left);
         System.out.print(node.data);
         inOrder(node.right);
+        if(isOperation(node)){
+            System.out.print(')');
+        }
     }
     
-    
+    private boolean isOperation(Node node){
+        if(node == null){
+            return false;
+        }
+        
+        char c = node.data.charAt(0);
+        return c == '^' || c == '*' || c == '/' || c == '+' || c == '-';
+    }
     
     
       class Node {
