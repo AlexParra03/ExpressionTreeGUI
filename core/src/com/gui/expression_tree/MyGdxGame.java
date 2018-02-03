@@ -10,6 +10,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
         UserInterface menu;
+        ExpressionTree tree;
 	
 	@Override
 	public void create () {
@@ -19,9 +20,9 @@ public class MyGdxGame extends ApplicationAdapter {
                 
                 Gdx.graphics.setWindowedMode(1000, 800);
                 Gdx.graphics.setResizable(false);
-                ExpressionTree tree = new ExpressionTree();
+                tree = new ExpressionTree();
                 
-                tree.read("1+2*8");
+                tree.read("1+2");
                 tree.inOrder();
                 System.out.println(tree.calculate());
 	}
@@ -34,6 +35,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.begin();
 		//batch.draw(img, 0, 0);
                 menu.render(batch);
+                menu.renderTree(tree, batch);
 		batch.end();
 	}
 	

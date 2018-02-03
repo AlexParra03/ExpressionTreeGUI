@@ -7,13 +7,14 @@ import java.util.Arrays;
 public class ExpressionTree {
     
     public Node root;
+    public boolean isValid = false;
 
     ExpressionTree(){
         this.root = new Node();
     }
     
     public void read(String input){
-        
+        isValid = true;
         int[] precedence = new int[input.length()];
         int currentPrecedence = 1;
         for(int i=input.length()-1; i>= 0; i--){
@@ -106,6 +107,7 @@ public class ExpressionTree {
                 return recursiveCalculate(node.left) - recursiveCalculate(node.right);
             }else{
                 System.out.println("Operation not recognized");
+                isValid = false;
                 return 0;
             }
         }
@@ -144,26 +146,11 @@ public class ExpressionTree {
     }
     
     
-      class Node {
-        Node left;
-        String data;
-        Node right;
-        
-        private Node(String data){
-            this.left = null;
-            this.right = null;
-            this.data = data;
-        }
-        
-        private Node(){
-            this.left = null;
-            this.right = null;
-            this.data = null; 
-        }
-        
-    }
+
     
 }
+
+
 
 
 
