@@ -18,13 +18,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
                 menu = new UserInterface();
                 
-                Gdx.graphics.setWindowedMode(1000, 800);
-                Gdx.graphics.setResizable(false);
+                Gdx.graphics.setWindowedMode(1100, 900);
+                //Gdx.graphics.setResizable(false);
                 tree = new ExpressionTree();
                 
-                tree.read("1+2");
+                tree.read("3 * 5 / 4 + 5");
                 tree.inOrder();
-                System.out.println(tree.calculate());
+                //System.out.println(tree.calculate());
 	}
 
 	@Override

@@ -23,8 +23,8 @@ public class UserInterface {
     private final int WIDTH = 400;
     private final int HEIGHT = 70;
     
-    private final int T_WIDTH = 550;
-    private final int T_HEIGHT = 300;
+    private final int T_WIDTH = 600;
+    private final int T_HEIGHT = 350;
     
     public String expression = "";
     
@@ -68,21 +68,22 @@ public class UserInterface {
         ArrayList<ArrayList<Node>> nodesInfo = new ArrayList<ArrayList<Node>>();
         recursiveRender(tree.root, 0, nodesInfo);
         //boxes.end();
-        int circleSize = 20;
-        int dy = 50;
+        int circleSize = 15;
+        int dy = 55;
         for(int i=0; i<nodesInfo.size(); i++){
             ArrayList<Node> list = nodesInfo.get(i);
             for(int j=0; j<list.size(); j++){
-                int x = (j+1)*(int)(T_WIDTH/ Math.pow(2, i));
-                int y = T_HEIGHT - (dy*i);
                 boxes.begin(ShapeType.Filled);
-                //if(list.get(i).data.length() > 0){
-                    boxes.circle( x,y,circleSize) ;
-                //}
+                if(!list.get(j).data.equals("")){
+                    boxes.circle( nodeXPos(j, i, circleSize),nodeYPos(i, dy),circleSize) ;
+                    if(i > 0){
+                        boxes.line(nodeXPos(j, i, circleSize), nodeYPos(i, dy)+circleSize, nodeXPos(j/2, i-1, circleSize), nodeYPos(i-1, dy)-circleSize);
+                    }
+                }
                 boxes.end();
                 batch.begin();
-                if(list.get(i).data.length() > 0){
-                    font.draw(batch, list.get(j).data, x, y);
+                if(!list.get(j).data.equals("")){
+                    font.draw(batch, list.get(j).data, nodeXPos(j, i, circleSize)-5, nodeYPos(i, dy)+5);
                 }
                 
                 batch.end();
@@ -94,8 +95,19 @@ public class UserInterface {
         batch.begin();
     }
     
+    private int nodeXPos(int number, int height, int circleSize){
+        int x = number*(int)(T_WIDTH/ Math.pow(2, height));
+        int offset = (int)(T_WIDTH/ (2*Math.pow(2, height)));
+        x += offset + circleSize;
+        return x;
+    }
+    
+    private int nodeYPos(int height, int dy){
+        return T_HEIGHT - (dy*height);
+    }
+    
     private void recursiveRender(Node node, int height, ArrayList<ArrayList<Node>> nodesInfo){
-        if(height == 4){
+        if(height == 6){
             return;
         }
         
