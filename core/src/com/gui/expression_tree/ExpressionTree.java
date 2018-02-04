@@ -2,6 +2,7 @@
 package com.gui.expression_tree;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 
 public class ExpressionTree {
@@ -36,6 +37,109 @@ public class ExpressionTree {
         }
         
         recursiveAdd(input, precedence, this.root);
+    }
+    
+    public void readT(String input){
+        int[] precedence = new int[input.length()];
+        int currentPrecedence = 1;
+        recursiveRead(precedence, input, currentPrecedence, 0, input.length()-1);
+        int i=0;
+        while(i<input.length()){
+            if(i != input.length()-1 && input.charAt(i) == '(' && input.charAt(i+1) != '+' && input.charAt(i+1) != '-'){
+                precedence = cutTwoIndex(precedence, i, findClosingIndex(input, i));
+                input = cutTwoIndex(input, i, findClosingIndex(input, i) );
+                i = -1;
+            }
+            i++;
+        }
+        recursiveAdd(input, precedence, this.root);
+    }
+    
+    private void recursiveRead(int[] precedence, String input, int currentPrecedence, int start, int end){
+        for(int i=start; i<=end; i++){
+            if(input.charAt(i) == '(' && i != input.length()-1 && input.charAt(i+1) != '+' && input.charAt(i+1) != '-'){
+                recursiveRead(precedence, input, currentPrecedence, i+1, findClosingIndex(input, i)-1);
+            }
+        }
+        
+        for(int i=end; i>= start; i--){
+            if(input.charAt(i) == '^'){
+                if(precedence[i] == 0){
+                    precedence[i] = currentPrecedence++;
+                }
+            }
+        }
+        
+        for(int i=start; i<=end; i++){
+            if(input.charAt(i) == '*' || input.charAt(i) == '/'){
+                if(precedence[i] == 0){
+                    precedence[i] = currentPrecedence++;
+                }
+            }
+        }
+        
+        for(int i=start; i<=end; i++){
+            if((input.charAt(i) == '-' || input.charAt(i) == '+') &&(i>0 && input.charAt(i-1) != '(')){
+                if(precedence[i] == 0){
+                    precedence[i] = currentPrecedence++;
+                }
+            }
+        }
+        
+       
+        
+    }
+    
+    private int findClosingIndex(String input, int index){
+        if(input.charAt(index) != '('){
+            return -1;
+        }
+        Stack<Character> stack = new Stack<Character>();
+        int wantedSize = 0;
+        boolean openingReached = false;
+        for(int i=0; i<input.length(); i++){
+            char c = input.charAt(i);
+            if(c == '('){
+                stack.push(c);
+            }
+            if(i == index){
+                wantedSize = stack.size()-1;
+                openingReached = true;
+            }
+            
+            if(c == ')'){
+                stack.pop();
+            }
+            
+            if(i > index && stack.size() == wantedSize){
+                return i;
+            }
+        }
+        
+        //Unreacheable if valid
+        return -1;
+       
+    }
+    
+    private int[] cutTwoIndex(int[] A, int i, int j){
+        int[] output = new int[A.length-2];
+        int currentIndex = 0;
+        for(int i2=0; i2<A.length; i2++ ){
+            if(i2 != i && i2 != j){
+                output[currentIndex++] = A[i2];
+            }
+        }
+        return output;
+    }
+    
+    private String cutTwoIndex(String str, int i, int j){
+        String output = "";
+        for(int i2=0; i2<str.length(); i2++){
+            if(i2 != i && i2 != j){
+                output += str.charAt(i2);
+            }
+        }
+        return output;
     }
 
     private void recursiveAdd(String input, int[] precedence, Node node){

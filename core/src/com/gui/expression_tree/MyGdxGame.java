@@ -21,9 +21,11 @@ public class MyGdxGame extends ApplicationAdapter {
                 Gdx.graphics.setWindowedMode(1100, 900);
                 //Gdx.graphics.setResizable(false);
                 tree = new ExpressionTree();
-                
-                tree.read("3 * 5 / 4 + 5");
+                tree.readT("(3*(5/4)+5)");
                 tree.inOrder();
+                
+
+                
                 //System.out.println(tree.calculate());
 	}
 
