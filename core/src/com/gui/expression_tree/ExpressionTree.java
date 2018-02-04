@@ -9,12 +9,15 @@ public class ExpressionTree {
     
     public Node root;
     public boolean isValid = false;
+    public String inOrder = "";
+    public String preOrder = "";
+    public String postOrder = "";
 
     ExpressionTree(){
         this.root = new Node();
     }
     
-    public void read(String input){
+    public void readLinear(String input){
         isValid = true;
         int[] precedence = new int[input.length()];
         int currentPrecedence = 1;
@@ -39,7 +42,7 @@ public class ExpressionTree {
         recursiveAdd(input, precedence, this.root);
     }
     
-    public void readT(String input){
+    public void read(String input){
         int[] precedence = new int[input.length()];
         int currentPrecedence = 1;
         recursiveRead(precedence, input, currentPrecedence, 0, input.length()-1);
@@ -219,9 +222,8 @@ public class ExpressionTree {
     
     
     public void inOrder(){
-        System.out.print("In-Order traversal: ");
+        this.inOrder = "";
         inOrder(this.root);
-        System.out.println();
     }
     
     private void inOrder(Node node){
@@ -230,14 +232,45 @@ public class ExpressionTree {
         }
         
         if(isOperation(node)){
-            System.out.print('(');
+            this.inOrder += '(';
         }
         inOrder(node.left);
-        System.out.print(node.data);
+        this.inOrder += node.data;
         inOrder(node.right);
         if(isOperation(node)){
-            System.out.print(')');
+            this.inOrder += ')';
         }
+    }
+    
+    public void postOrder(){
+        this.postOrder = "";
+        postOrder(this.root);
+    }
+    
+    private void postOrder(Node node){
+        if(node == null){
+            return;
+        }
+        
+
+        postOrder(node.left);
+        postOrder(node.right);
+        this.postOrder += node.data + " ";
+    }
+    
+    public void preOrder(){
+        this.preOrder = "";
+        preOrder(this.root);
+    }
+    
+    private void preOrder(Node node){
+        if(node == null){
+            return;
+        }
+        
+        this.preOrder += node.data + " ";
+        preOrder(node.left);
+        preOrder(node.right);
     }
     
     private boolean isOperation(Node node){

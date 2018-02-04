@@ -18,15 +18,19 @@ public class UserInterface {
     ShapeRenderer boxes = new ShapeRenderer();
     
     // Coordinates of the input box
-    private final int X = 50;
+    private final int X = 10;
     private final int Y = 400;
-    private final int WIDTH = 400;
+    private final int WIDTH = 350;
     private final int HEIGHT = 70;
     
     private final int T_WIDTH = 600;
     private final int T_HEIGHT = 350;
     
     public String expression = "";
+    public String inOrder = "";
+    public String postOrder = "";
+    public String preOrder = "";
+    public String result = "";
     
     
     public UserInterface(){
@@ -47,12 +51,19 @@ public class UserInterface {
             batch.begin();
             font.draw(batch, "Input:", X+ 14, Y+HEIGHT-10);
             font.draw(batch, this.expression, X + 14, Y+HEIGHT - 30);
-            font.draw(batch, "Press ENTER to close.", X + 14, Y+HEIGHT - 50);
+            font.draw(batch, "Press ENTER to evaluate.", X + 14, Y+HEIGHT - 50);
+            font.draw(batch, "IN-Order: "+inOrder, X+WIDTH+10, Y+HEIGHT);
+            font.draw(batch, "PRE-Order: "+preOrder, X+WIDTH+10, Y+HEIGHT-20);
+            font.draw(batch, "POST-Order: "+postOrder, X+WIDTH+10, Y+HEIGHT-40);
+            font.draw(batch, "Result : "+result, X+WIDTH+10, Y+HEIGHT-60);
+            
 
     }
     
     public void addCharacter(char c){
-        this.expression += c;
+        if(this.expression.length() < 30){
+            this.expression += c;
+        }
     }
     
     public void backspace(){

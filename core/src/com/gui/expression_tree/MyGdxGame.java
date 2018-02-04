@@ -8,43 +8,36 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
         UserInterface menu;
         ExpressionTree tree;
+        boolean treeReady = false;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
                 menu = new UserInterface();
-                
-                Gdx.graphics.setWindowedMode(1100, 900);
-                //Gdx.graphics.setResizable(false);
                 tree = new ExpressionTree();
-                tree.readT("(3*(5/4)+5)");
-                tree.inOrder();
-                
-
-                
-                //System.out.println(tree.calculate());
+                Gdx.graphics.setWindowedMode(1100, 900);
+                Gdx.graphics.setResizable(false);
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 200, 50);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 handleInput();
 		batch.begin();
 		//batch.draw(img, 0, 0);
                 menu.render(batch);
-                menu.renderTree(tree, batch);
-		batch.end();
+                if(treeReady){
+                    menu.renderTree(tree, batch);
+                }
+                batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
         
         private void handleInput(){
@@ -59,63 +52,63 @@ public class MyGdxGame extends ApplicationAdapter {
                    input.addCharacter('+');
                }else if(Gdx.input.isKeyJustPressed( 16 ) ){
                    input.addCharacter('(');
-               }else if(Gdx.input.isKeyJustPressed( 8 ) ){
+               }else if(Gdx.input.isKeyJustPressed( 7 ) ){
                    input.addCharacter(')');
                }
            }else{
 
                 if(Gdx.input.isKeyJustPressed( 29 )){
-                    input.addCharacter('A');
+                    input.addCharacter('a');
                }else if(Gdx.input.isKeyJustPressed( 30 )){
-                    input.addCharacter('B');
+                    input.addCharacter('b');
                }else if(Gdx.input.isKeyJustPressed( 31 )){
-                    input.addCharacter('C');
+                    input.addCharacter('c');
                }else if(Gdx.input.isKeyJustPressed( 32 )){
-                   input.addCharacter('D');
+                   input.addCharacter('d');
                }else if(Gdx.input.isKeyJustPressed( 33 )){
-                   input.addCharacter('E');
+                   input.addCharacter('e');
                }else if(Gdx.input.isKeyJustPressed( 34 )){
-                   input.addCharacter('F');
+                   input.addCharacter('f');
                }else if(Gdx.input.isKeyJustPressed( 35 )){
-                   input.addCharacter('G');
+                   input.addCharacter('g');
                }else if(Gdx.input.isKeyJustPressed( 36 )){
-                   input.addCharacter('H');
+                   input.addCharacter('h');
                }else if(Gdx.input.isKeyJustPressed( 37 )){
-                   input.addCharacter('I');
+                   input.addCharacter('i');
                }else if(Gdx.input.isKeyJustPressed( 38 )){
-                   input.addCharacter('J');
+                   input.addCharacter('j');
                }else if(Gdx.input.isKeyJustPressed( 39 )){
-                   input.addCharacter('K');
+                   input.addCharacter('k');
                }else if(Gdx.input.isKeyJustPressed( 40 )){
-                   input.addCharacter('L');
+                   input.addCharacter('l');
                }else if(Gdx.input.isKeyJustPressed( 41 )){
-                   input.addCharacter('M');
+                   input.addCharacter('m');
                }else if(Gdx.input.isKeyJustPressed( 42 )){
-                   input.addCharacter('N');
+                   input.addCharacter('n');
                }else if(Gdx.input.isKeyJustPressed( 43 )){
-                   input.addCharacter('O');
+                   input.addCharacter('o');
                }else if(Gdx.input.isKeyJustPressed( 44 )){
-                   input.addCharacter('P');
+                   input.addCharacter('p');
                }else if(Gdx.input.isKeyJustPressed( 45 )){
-                   input.addCharacter('Q');
+                   input.addCharacter('q');
                }else if(Gdx.input.isKeyJustPressed( 46 )){
-                   input.addCharacter('R');
+                   input.addCharacter('r');
                }else if(Gdx.input.isKeyJustPressed( 47 )){
-                   input.addCharacter('S');
+                   input.addCharacter('s');
                }else if(Gdx.input.isKeyJustPressed( 48 )){
-                   input.addCharacter('T');
+                   input.addCharacter('t');
                }else if(Gdx.input.isKeyJustPressed( 49 )){
-                   input.addCharacter('U');
+                   input.addCharacter('u');
                }else if(Gdx.input.isKeyJustPressed( 50 )){
-                   input.addCharacter('V');
+                   input.addCharacter('v');
                }else if(Gdx.input.isKeyJustPressed( 51 )){
-                   input.addCharacter('W');
+                   input.addCharacter('w');
                }else if(Gdx.input.isKeyJustPressed( 52 )){
-                   input.addCharacter('X');
+                   input.addCharacter('x');
                }else if(Gdx.input.isKeyJustPressed( 53 )){
-                   input.addCharacter('Y');
+                   input.addCharacter('y');
                }else if(Gdx.input.isKeyJustPressed( 54 )){
-                   input.addCharacter('Z');
+                   input.addCharacter('x');
                }else if(Gdx.input.isKeyJustPressed( 7 ) || Gdx.input.isKeyJustPressed( 144 )){
                    input.addCharacter('0');
                }else if(Gdx.input.isKeyJustPressed( 8 ) || Gdx.input.isKeyJustPressed( 145 )){
@@ -146,8 +139,28 @@ public class MyGdxGame extends ApplicationAdapter {
                    input.addCharacter('-');
                }else if(Gdx.input.isKeyJustPressed(67)){
                    input.backspace();
-               }
+               }else if(Gdx.input.isKeyJustPressed(66)){
+                    compute();
+                }
             }
 
+        }
+        
+        private void compute(){
+            this.tree.read(this.menu.expression);
+            this.tree.inOrder();
+            this.menu.inOrder =this.tree.inOrder ;
+            this.tree.postOrder();
+            this.menu.postOrder = this.tree.postOrder;
+            this.tree.preOrder();
+            this.menu.preOrder = this.tree.preOrder;
+            this.treeReady = true;
+            
+            try{
+                double result = this.tree.calculate();
+                this.menu.result = ""+result;
+            }catch(NumberFormatException e){
+                this.menu.result = "N/A";
+            }
         }
 }
