@@ -19,6 +19,7 @@ public class MyGdxGame extends ApplicationAdapter {
                 tree = new ExpressionTree();
                 Gdx.graphics.setWindowedMode(1100, 900);
                 Gdx.graphics.setResizable(false);
+                Gdx.graphics.setTitle("Expression Tree");
 	}
 
 	@Override
